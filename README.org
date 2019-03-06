@@ -3,6 +3,6 @@
 * Build Dockerfile
 
    #+begin_src bash :results verbatim
-     docker image build -t origoss/fluentd:v1.3.3-debian-onbuild-1.0 .
+     docker image build -t origoss/fluentd:v1.3.3-debian-onbuild-1.0_0.2.0 .
    #+end_src
   
