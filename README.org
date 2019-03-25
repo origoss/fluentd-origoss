@@ -3,8 +3,36 @@
 * Build Dockerfile
 
    #+begin_src bash :results verbatim
-     docker image build -t origoss/fluentd:v1.3.3-debian-onbuild-1.0_0.5.1 .
+     docker image build -t origoss/fluentd:v1.3.3-debian-onbuild-1.0_0.6.0 .
    #+end_src
 
    #+RESULTS:
+   #+begin_example
+   Sending build context to Docker daemon  104.4kB
+   Step 1/7 : FROM fluent/fluentd:v1.3.3-debian-onbuild-1.0
+   # Executing 2 build triggers
+    ---> Using cache
+    ---> Using cache
+    ---> 251cba623c10
+   Step 2/7 : USER root
+    ---> Using cache
+    ---> 657ea4c841d7
+   Step 3/7 : RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev"   && apt-get update   && apt-get install -y --no-install-recommends $buildDeps   && apt-get install -y --no-install-recommends git   && sudo gem install specific_install   && sudo gem install fluent-plugin-docker_metadata_filter   && sudo gem install fluent-plugin-kubernetes_metadata_filter   && sudo gem install fluent-plugin-elasticsearch   && sudo gem install fluent-plugin-s3 -v 1.0.0 --no-document   && sudo gem install fluent-plugin-rewrite-tag-filter   && sudo gem specific_install -l https://github.com/arcivanov/fluent-plugin-json-in-json.git   && sudo gem sources --clear-all   && SUDO_FORCE_REMOVE=yes apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps   && rm -rf /var/lib/apt/lists/* /home/fluent/.gem/ruby/2.3.0/cache/*.gem
+    ---> Using cache
+    ---> 216e2e370d29
+   Step 4/7 : COPY set_umask.sh /bin/set_umask.sh
+    ---> Using cache
+    ---> 0367ed0245a6
+   Step 5/7 : USER fluent
+    ---> Using cache
+    ---> 4cd132ed2ef1
+   Step 6/7 : ENTRYPOINT ["tini",  "--", "/bin/set_umask.sh"]
+    ---> Using cache
+    ---> 654ced4c941f
+   Step 7/7 : CMD ["fluentd"]
+    ---> Using cache
+    ---> ecf333dd9d74
+   Successfully built ecf333dd9d74
+   Successfully tagged origoss/fluentd:v1.3.3-debian-onbuild-1.0_0.6.0
+   #+end_example
   

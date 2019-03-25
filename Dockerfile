@@ -20,4 +20,8 @@ RUN buildDeps="sudo make gcc g++ libc-dev ruby-dev" \
   && SUDO_FORCE_REMOVE=yes apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $buildDeps \
   && rm -rf /var/lib/apt/lists/* /home/fluent/.gem/ruby/2.3.0/cache/*.gem
 
+COPY set_umask.sh /bin/set_umask.sh
+
 USER fluent
+ENTRYPOINT ["tini",  "--", "/bin/set_umask.sh"]
+CMD ["fluentd"]
